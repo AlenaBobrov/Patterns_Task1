@@ -3,9 +3,9 @@ package test;
 import Data.DataGenerator;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.Keys;
 
 import java.time.Duration;
@@ -28,6 +28,14 @@ public class DeliveryTest {
     SelenideElement rescheduleRegistration = $("[data-test-id = 'replan-notification'] .notification__content");
     String successMessage = "Встреча успешно запланирована на ";
     String warningMessage = "У вас уже запланирована встреча на другую дату. Перепланировать?";
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
 
     @BeforeEach
     void setup() {
